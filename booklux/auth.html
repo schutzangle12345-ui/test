@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In & Sign Up | BookLux - AI Luxury Concierge</title>
+    <meta name="description" content="Access your private luxury concierge. Book private jets, yachts, and villas with ease.">
+    
+    <!-- Google Fonts: Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --color-primary: #00519e;
+            --color-primary-dark: #003a70; /* 15% darker */
+            --color-accent: #fbd300;
+            --color-background: #ffffff;
+            --color-surface: #ffffff;
+            --color-text: #111827;
+            --color-text-muted: #6b7280;
+            --color-border: #e5e7eb;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --radius: 8px;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        header {
+            width: 100%;
+            background: var(--color-background);
+            border-bottom: 1px solid var(--color-border);
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .cta-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        /* Auth Container */
+        .auth-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 1.5rem 60px;
+            background-color: #fcfcfc;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header img {
+            margin-bottom: 1rem;
+        }
+
+        .auth-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .auth-header p {
+            color: var(--color-text-muted);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Tabs System */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2rem;
+        }
+
+        .tab-trigger {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: none;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-trigger.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 81, 158, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .submit-btn:disabled {
+            background-color: var(--color-text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--color-border);
+            padding: 4rem 1.5rem;
+            background: var(--color-surface);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--color-text-muted);
+            transition: fill 0.2s;
+        }
+
+        .social-links a:hover svg {
+            fill: var(--color-primary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .auth-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+  <base href="/booklux/" />
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="nav-logo">
+                <img src="logo-test.png" alt="test logo" style="height:40px;object-fit:contain">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="auth.html" class="cta-btn">Sign In</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="logo-test.png" alt="test logo" style="height:48px;object-fit:contain">
+                <h1>Welcome to BookLux</h1>
+                <p>Your AI-powered gateway to the world's most exclusive luxury services.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-trigger" onclick="switchTab('signin')">Sign In</button>
+                <button class="tab-trigger active" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Sign Up Tab -->
+            <div id="signup-tab" class="tab-content active">
+                <form data-backend="signup">
+                    <input type="hidden" name="role" value="user">
+                    
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" name="email" placeholder="name@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" minlength="6" placeholder="At least 6 characters" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    
+                    <p data-success style="display:none; color: #10b981; font-weight: 600; margin-top: 1.5rem; text-align: center; font-size: 0.9rem; padding: 0.75rem; background: #ecfdf5; border-radius: var(--radius);">
+                        Registration successful! Please login.
+                    </p>
+                </form>
+            </div>
+
+            <!-- Sign In Tab -->
+            <div id="signin-tab" class="tab-content">
+                <form onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="signin-email">Email Address</label>
+                        <input type="email" id="signin-email" placeholder="name@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input type="password" id="signin-password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Private Jets</a></li>
+                    <li><a href="#">Yacht Charters</a></li>
+                    <li><a href="#">Villa Rentals</a></li>
+                    <li><a href="#">Private Chefs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Pricing Guide</a></li>
+                    <li><a href="#">Travel Tips</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Booking Policies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mailto:concierge@booklux.ai">Contact Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 test. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">
+                    <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                </a>
+                <a href="#">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tab Switching Logic -->
+    <script>
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.tab-trigger').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to selected
+            if (tabId === 'signin') {
+                document.querySelectorAll('.tab-trigger')[0].classList.add('active');
+                document.getElementById('signin-tab').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-trigger')[1].classList.add('active');
+                document.getElementById('signup-tab').classList.add('active');
+            }
+        }
+
+        // Logic to auto-switch after successful signup
+        const signupForm = document.querySelector('form[data-backend="signup"]');
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                const successMsg = signupForm.querySelector('[data-success]');
+                if (successMsg && successMsg.style.display === 'block') {
+                    setTimeout(() => {
+                        switchTab('signin');
+                        // Optional: populate signin email
+                        const signupEmail = document.getElementById('signup-email').value;
+                        document.getElementById('signin-email').value = signupEmail;
+                    }, 2000);
+                }
+            });
+        });
+
+        observer.observe(signupForm.querySelector('[data-success]'), { attributes: true, attributeFilter: ['style'] });
+    </script>
+
+    <!-- MANDATORY BACKEND SNIPPET -->
+    <script>
+    (function() {
+      var BACKEND = 'http://localhost:3000/api';
+      var TOKEN = 'b3545cc44c61abf10ab97fb62e97a329c26e0e8c820a3e0ba3302176c8ed8ded';
+      var DOMAIN = 'booklux.ai';
+      var HEADERS = { 'Content-Type': 'application/json', 'X-Token': TOKEN, 'X-Domain': DOMAIN };
+
+      // 3. Handle signup only
+      document.addEventListener('submit', function(e) {
+        var form = e.target.closest('form[data-backend="signup"]');
+        if (!form) return;
+        e.preventDefault();
+        
+        var data = {};
+        new FormData(form).forEach(function(v, k) { data[k] = v; });
+
+        var btn = form.querySelector('button[type="submit"]');
+        var originalText = '';
+        if (btn) {
+          originalText = btn.innerText;
+          btn.innerText = 'Sending...';
+          btn.disabled = true;
+        }
+
+
+        fetch(BACKEND + '/users', {
+          method: 'POST',
+          headers: HEADERS,
+          body: JSON.stringify(data)
+        }).then(function(r) { return r.json(); }).then(function(res) {
+          if (res.success) {
+            var msg = form.querySelector('[data-success]');
+            if (msg) { msg.style.display = 'block'; }
+            form.reset();
+            if (btn) btn.style.display = 'none';
+          } else {
+            alert(res.error || 'Failed to sign up');
+            if (btn) { btn.innerText = originalText; btn.disabled = false; }
+          }
+        }).catch(function(){
+          alert('Network error occurred');
+          if (btn) { btn.innerText = originalText; btn.disabled = false; }
+        });
+      });
+    })();
+    </script>
+</body>
+</html>
