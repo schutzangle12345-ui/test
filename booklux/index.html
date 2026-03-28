@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookLux | AI Luxury Concierge for Jets, Yachts & Villas</title>
+    <meta name="description" content="BookLux is an AI chat concierge helping high net worth individuals book private jets, yachts, villas, and VIP experiences seamlessly.">
+    
+    <!-- Google Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            /* BRAND COLORS - MANDATORY OVERRIDE */
+            --color-primary: #00519e;
+            --color-primary-dark: #00407d; /* 15% darker than #00519e */
+            --color-accent: #fbd300;
+            --color-background: #ffffff;
+            --color-surface: #f8f9fb;
+            --color-text: #111827;
+            --color-text-muted: #4b5563;
+            --color-border: #e5e7eb;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* Sizing */
+            --container-max: 1200px;
+            --section-padding: 100px;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-surface);
+            border-color: var(--color-primary);
+        }
+
+        .text-accent { color: var(--color-accent); }
+        .text-muted { color: var(--color-text-muted); }
+        
+        section {
+            padding: var(--section-padding) 0;
+        }
+
+        /* NAVIGATION */
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--color-text-muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .nav-cta {
+            margin-left: 16px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 100px;
+            text-align: center;
+            background-color: var(--color-background);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-primary);
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5vw, 64px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--color-text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-secondary-link {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 16px;
+        }
+
+        .hero-secondary-link:hover {
+            text-decoration: underline;
+        }
+
+        /* FEATURES SECTION */
+        .features {
+            background-color: var(--color-surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .grid-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--color-background);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--color-border);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--color-text-muted);
+            font-size: 16px;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            background-color: var(--color-background);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+            position: relative;
+        }
+
+        .step {
+            text-align: left;
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--color-accent);
+            opacity: 0.5;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .step h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            background-color: var(--color-surface);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--color-background);
+            padding: 32px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--color-border);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            font-size: 17px;
+            color: var(--color-text);
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-info h4 {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .author-info span {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        /* FINAL CTA */
+        .final-cta {
+            text-align: center;
+            background-color: var(--color-primary);
+            color: #ffffff;
+            padding: 120px 0;
+        }
+
+        .final-cta h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .final-cta p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .final-cta .btn-primary {
+            background-color: var(--color-accent);
+            color: var(--color-text);
+        }
+
+        .final-cta .btn-primary:hover {
+            background-color: #e5c100;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--color-border);
+            background-color: var(--color-background);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            margin-top: 20px;
+            color: var(--color-text-muted);
+            max-width: 300px;
+        }
+
+        .footer-column h5 {
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: var(--color-text-muted);
+            font-size: 15px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--color-text-muted);
+            transition: fill 0.2s ease;
+        }
+
+        .social-links a:hover svg {
+            fill: var(--color-primary);
+        }
+
+        /* MOBILE MENU RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+  <base href="/booklux/" />
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo-test.png" alt="test logo" style="height:40px;object-fit:contain">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="auth.html">Sign In</a>
+                <div class="nav-cta">
+                    <a href="https://tes.test" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <span class="hero-badge">AI-Powered Luxury Concierge</span>
+            <h1>Your Portal to the World's Finest Experiences</h1>
+            <p>One seamless AI chat to book private jets, yachts, villas, and personal chefs. Stop managing vendors—start enjoying your journey.</p>
+            <div class="hero-actions">
+                <a href="https://tes.test" class="btn btn-primary">Begin Your Request</a>
+                <a href="about.html" class="hero-secondary-link">How it works &rarr;</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why High Net Worth Individuals Choose BookLux</h2>
+                <p class="text-muted">Complexity simplified. We solve the friction of luxury travel.</p>
+            </div>
+            <div class="grid-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h3>Unified Luxury Ecosystem</h3>
+                    <p>No more disparate calls. Book your heavy jet, Mediterranean yacht, and Alpine chalet through a single, intelligent interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </div>
+                    <h3>Absolute Price Transparency</h3>
+                    <p>Stop guessing. Get clear price ranges, empty leg opportunities, and detailed breakdowns of APA and local taxes upfront.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3>Zero-Stress Management</h3>
+                    <p>From contract vetting to handling last-minute itinerary changes, our AI and support team manage the operational heavy lifting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Seamless Path to Booking</h2>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <span class="step-number">01</span>
+                    <h3>Brief the Concierge</h3>
+                    <p>Describe your vision—dates, locations, and preferences—once. Our AI understands the nuances of luxury requirements.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">02</span>
+                    <h3>Review Curated Options</h3>
+                    <p>Receive a selection of trusted, vetted options with clear itineraries and all-inclusive pricing. No hours of research required.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">03</span>
+                    <h3>One-Click Confirmation</h3>
+                    <p>Secure your bookings, sign digital contracts, and manage payments in one place. We handle the rest until you arrive.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted by Discerning Clients</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"Finally, a service that understands the value of time. Booking a jet and a villa used to take my assistant all day. With BookLux, it's done in minutes."</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>James R.</h4>
+                            <span>Family Office Director</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"The transparency on yacht APA and seasonal pricing was a game changer for our summer planning. Extremely professional and efficient."</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Elena S.</h4>
+                            <span>Luxury Lifestyle Manager</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"When our flight was delayed, BookLux automatically updated our private driver and chef. That level of orchestration is unheard of."</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Marcus T.</h4>
+                            <span>Entrepreneur</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Experience True Concierge Freedom</h2>
+            <p>Join the elite circle of travelers who have streamlined their luxury lifestyle with BookLux.</p>
+            <a href="https://tes.test" class="btn btn-primary">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="logo-test.png" alt="test logo" style="height:32px;object-fit:contain">
+                    <p>The premier AI chat concierge for global luxury services. Managed by experts, powered by intelligence.</p>
+                </div>
+                <div class="footer-column">
+                    <h5>Services</h5>
+                    <ul>
+                        <li><a href="#">Private Jets</a></li>
+                        <li><a href="#">Yacht Charters</a></li>
+                        <li><a href="#">Luxury Villas</a></li>
+                        <li><a href="#">Private Chefs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="auth.html">Sign In</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Support</h5>
+                    <ul>
+                        <li><a href="mailto:concierge@tes.test">Email Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Booking Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 test. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
